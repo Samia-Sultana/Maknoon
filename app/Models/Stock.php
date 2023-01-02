@@ -12,7 +12,8 @@ class Stock extends Model
         'status',
         'availableStock',
         'totalStock',
-        'unitPrice'
+        'unitPrice',
+        'quantity'
     ];
     public function product(){
         return $this->hasMany('App\Models\Product');

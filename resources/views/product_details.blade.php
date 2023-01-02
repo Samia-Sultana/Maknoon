@@ -315,7 +315,7 @@
                             <span class="code-no">{{$productDetail->id}}</span>
                         </div>
                         <div class="price-div">
-                            <span class="price">{{"BDT ". $productDetail->price}}</span>
+                            <span class="price">{{"BDT ". $stockDetail[0]->unitPrice}}</span>
                             
                         </div>
                     </div>

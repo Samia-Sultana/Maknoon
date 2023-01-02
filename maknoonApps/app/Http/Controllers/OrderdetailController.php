@@ -119,13 +119,8 @@ class OrderdetailController extends Controller
         ->update([
             'status' => $status
         ]);
-
-        return response()->json(['hi'=>'hiiiiiiiiii']);
-
-       
         
-
-      
+        return response()->json(['success'=>'Status Changed Successfully']); 
         
     }
 

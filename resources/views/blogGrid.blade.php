@@ -13,7 +13,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/logo/favicon/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/logo/favicon/favicon-16x16.png')}}">
     <link rel="manifest" href="{{ asset('assets/img/logo/favicon/site.webmanifest')}}">
-    
 
     <!--======== Bootstrap 4.6===-->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css')}}">
@@ -23,21 +22,22 @@
     <!---======= owl carousel======-->
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css')}}">
+
     <!---======= Header css-->
     <link rel="stylesheet" href="{{ asset('assets/css/header-css/reset.min.css')}}">
+    <!---==========zoom css=========-->
+    <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/easyzoom.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css')}}">
-    
-    <!---------toaster message -------------->
-    <link media="screen" rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
 
 </head>
 
 
 <body class="pattern-bg">
-     <!----===============header start===============-->
-     <header class="header" id="header-area">
+      <!----===============header start===============-->
+      <header class="header" id="header-area">
         <div class="container">
             <section class="wrapper">
             <!----------------dynamic logo---------------->
@@ -254,162 +254,61 @@
     <!--== Search Box Area End ==-->
 
 
-
-    <!--=======Filter section start==========-->
-
-    <!--<section class="main-content">
-        <div class="container container-xxl filter">
-            <div class="left-filter">
-                <div class="filter-group hide-on-mobile">
-                    <form action="#">
-                        <select>
-                            <option data-display="Sort By">Clear</option>
-                            <option value="1">Best Selling</option>
-                            <option value="2">Price High to Low</option>
-                            <option value="3">Price Low to High</option>
-                        </select>
-                    </form>
-                </div>
+<!--Body Content-->
+<div id="page-content" class="main-content">
+    <!--Page Title-->
+    <div class="page section-header text-center mb-0">
+        <div class="page-title">
+            <div class="wrapper">
+                <h1 class="page-width">All Blog</h1>
             </div>
-            <div class="right-filter">
-                <p class="filter-label">
-                    <strong>Filter by: </strong>
-                </p>
-                <div class="filter-group hide-on-desktop">
-                    <select>
-                        <option data-display="Sort By">Clear</option>
-                        <option value="1">Best Selling</option>
-                        <option value="2">Price High to Low</option>
-                        <option value="3">Price Low to High</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <select>
-                        <option data-display="Size">Clear</option>
-                        <option value="1">XS</option>
-                        <option value="2">S</option>
-                        <option value="3">M</option>
-                        <option value="4">L</option>
-                        <option value="5">XL</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <select class="product-color">
-                        <option data-display="Color">Clear</option>
-                        <option value="1">Black</option>
-                        <option value="2">Yellow</option>
-                        <option value="3">Blue</option>
-                        <option value="4">Floral Prints</option>
-                        <option value="5">Green</option>
-                        <option value="6">Pink</option>
-                        <option value="7">Red</option>
-                        <option value="8">Solid</option>
-                    </select>
-                </div>
-            </div>
-            
-            
         </div>
-    </section>-->
-
-
-    <section class="main-content pb-60">
-        <div class="container container-xxl">
-
-            <div class="heading">
-                <h2>
-                    {{$catagoryName}}
-                </h2>
-            </div>
-
-
-            <!-- Shop Page Content Start -->
-
-            <div class="shop-page-content-wrap">
-                <div class="shop-page-products-wrap">
-                    <div class="products-wrapper">
-                        <div class="row">
-                            @foreach($catagoryProducts as $item)
-                            @php
-                            $stocksOfProduct = App\Models\Stock::where('product_id',$item->id)->get();
-                            @endphp
-                            @foreach($stocksOfProduct as $stock)
-                            @if($stock->status == "enable")
-                            <div class="col-lg-3 col-sm-6 col-6 p-x-5">
-                                <!-- Single Product Item -->
-                                <div class="single-product-item text-center mb-3">
-                                    <figure class="product-thumb">
-                                        <a href="{{'/product/details/' . $item->id. '/' . $stock->sku}}"><img src="{{url('photos/'. $item['image1'])}}"
-                                                alt="Products" class="img-fluid"></a>
-                                    </figure>
-
-                                    <div class="product-details">
-                                        <h2><a href="{{'/product/details/' . $item->id. '/' . $stock->sku}}">{{$item->productName}}</a></h2>
-                                        <div class="product-code">
-                                            <span class="code-title">Product Code: </span>
-                                            <span class="code-no">{{$stock->sku}}</span>
-                                        </div>
-                                        <div class="price-div">
-                                            <span class="price">{{"BDT ".$stock->unitPrice}}</span>
-                                            
-                                        </div>
-
-                                        <form>
-                                        <input type="hidden" class="pro-id" value="{{$item['id']}}"/>
-                                        <input type="hidden" class="pro-sku" value="{{$stock->sku}}" />
-                                        <button type="button" class="btn-add-to-cart btn-submit" >
-                                            
-                                        + Add to
-                                            Cart
-                                          
-                                        </button>
-                                        </form>
-
-                                        <!---<button type="button" class="btn-add-to-cart"> <a href="{{'/add-to-cart/'.$item['id']}}"> </a></button>--->
-                                    </div>
-
-                                   
-                                </div>
-                                <!-- Single Product Item -->
+    </div>
+   
+    <div class="container">
+        <div class="row">
+            <!--Main Content-->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+               
+                <div class="blog--list-view">
+                    <div class="row">
+                        <!-- Article Image -->
+                        @if($blogs)
+                        @foreach($blogs as $blog)
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 article mb-5">
+                            <!-- Article Image -->
+                            <a class="article_featured-image" href="{{url('/blog/'.$blog->id.'/view')}}"><img class="blur-up lazyload" data-src="{{url('photos/' . $blog->image)}}" src="{{url('photos/' . $blog->image)}}" alt=""></a>
+                            <h2 class="h3"><a href="{{url('/blog/'.$blog->id.'/view')}}">{{$blog->title}}</a></h2>
+                            <ul class="publish-detail">
+                                
+                                <li><i class="icon anm anm-clock-r"></i> <time datetime="2017-05-02">{{$blog->created_at->format('d M Y')}}</time></li>
+                            </ul>
+                            <div class="rte">
+                                <?php
+                                $blogModel = App\Models\Blog::find($blog->id);
+                                $blogDesc = html_entity_decode($blogModel['description']);
+                                $substringBlog = substr($blogDesc, 0, 200);
+                                echo $substringBlog;
+                                ?>
                             </div>
-                            @endif
-                            @endforeach
-                            @endforeach
-                           
+                            <p><a href="{{url('/blog/'.$blog->id.'/view')}}" class="btn btn-secondary btn--small">Read more <i class="fa fa-caret-right" aria-hidden="true"></i></a></p>
                         </div>
+                        @endforeach
+                        @endif
                     </div>
+                    <hr />
+                   
                 </div>
             </div>
-
-            <!-- Shop Page Content End -->
-
-
-
-            <div class="row pt-5">
-                <div class="col-md-12">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            <!--End Main Content-->
         </div>
+    </div>
 
-    </section>
+</div>
+<!--End Body Content-->
 
-    <!--=======Filter section end==========-->
-
-    <!--===============Footer start=============-->
-    <footer class="d-flex-column" style="border-top: 1px solid #c5c5c5;">
+  <!--===============Footer start=============-->
+  <footer class="d-flex-column" style="border-top: 1px solid #c5c5c5;">
         <div class="container container-xxl text-left p-tb-60 ">
             <div class="row   text-center">
                 <hr class="clearfix w-100 d-md-none mb-0">
@@ -529,8 +428,8 @@
     <!--===============Footer end=============-->
 
 
-    <!---=====jquery====-->
-    <script src="{{ asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+   <!----Jquery----->
+   <script src="{{ asset('assets/js/jquery-3.6.0.min.js')}}"></script>
     <!--=====popper js=====-->
     <script src="{{ asset('assets/js/popper.min.js')}}"></script>
     <!--=====bootstrap=====-->
@@ -539,33 +438,63 @@
     <script src="{{ asset('assets/js/owl.carousel.min.js')}}"></script>
     <!--=====header script=====-->
     <script src="{{ asset('assets/js/script.js')}}"></script>
-
     <!--=====header script=====-->
-    <!--===========zoom ============-->
-    <script src="{{ asset('assets/js/swiper.min.js')}}"></script>
-    <script src="{{ asset('assets/js/easyzoom.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.nice-select.js')}}"></script>
     <script src="{{ asset('assets/js/main.js')}}"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"> </script>
+
+    
+
 
     <script type="text/Javascript">
-        $(".button-qty").on("click", function() {
-    
+
+        $(".button-qty").click(function(e){
+        e.preventDefault();
+
         var $button = $(this);
-        var oldValue = $button.parent().find("input").val();
+        var oldQuantity = $button.parent().find("input:even").val();
+        var productId = $button.parent().find("input:odd").val();
+        var productSku = $button.parent().prev().val();
+        console.log(oldQuantity,productId,productSku);
+        var newQuantity;
         $button.blur();
         if ($button.hasClass("inc")) {
-        var newVal = parseFloat(oldValue) + 1;
-      } else {
-     // Don't allow decrementing below zero
-      if (oldValue > 1) {
-        var newVal = parseFloat(oldValue) - 1;
-      } else {
-        newVal = 1;
-      }
-    }
-    
-    $button.parent().find("input").val(newVal);
+            newQuantity = parseFloat(oldQuantity) + 1;
+        } 
+        else {
+        if (oldQuantity > 1) {
+            newQuantity = parseFloat(oldQuantity) - 1;
+        } else {
+            newQuantity = 1;
+        }
+        }
+        
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        $.ajax({
+            type:'POST',
+            url:"{{ route('updateShoppingCart') }}",
+            data:{productId:productId, newQuantity:newQuantity, productSku:productSku},
+            success:function(data){
+                var productPrice = $button.parents(".pro-quantity").prev().text();
+                $button.parent().find("input:even").val(newQuantity);
+                $button.parents(".pro-quantity").next().text(newQuantity * productPrice);
+
+                var cart = JSON.parse(data.cart);
+                var subTotal = cart.reduce(function(accumulator,currentItem){
+                    return accumulator + (currentItem.qty * currentItem.price);
+                },0);
+                var grandTotal = subTotal ;
+                //console.log(grandTotal);
+                $button.parents(".cart-detail-row").next().find("td.sub-total").text(subTotal);
+                $button.parents(".cart-detail-row").next().find("td.grand-total").text(grandTotal);
+                
+            }
+        });
+
     
     });
       </script>
@@ -579,6 +508,7 @@
                 document.getElementById("mySidenav").style.width = "90vw";
             }
         }
+
         /* Set the width of the side navigation to 0 */
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
@@ -588,80 +518,6 @@
 
 
 
-    <script>
-        $(document).ready(function () {
-            // product Gallery and Zoom
-            // activation carousel plugin
-            var galleryThumbs = new Swiper('.gallery-thumbs', {
-                spaceBetween: 5,
-                freeMode: true,
-                watchSlidesVisibility: true,
-                watchSlidesProgress: true,
-                on: {
-                    init: function () {
-                        console.log('swiper initialized');
-                        // activation zoom plugin
-                        var $easyzoom = $('.easyzoom').easyZoom();
-                    },
-                },
-                breakpoints: {
-                    0: {
-                        slidesPerView: 3,
-                    },
-                    992: {
-                        slidesPerView: 4,
-                    },
-                }
-            });
-            var galleryTop = new Swiper('.gallery-top', {
-                spaceBetween: 10,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                thumbs: {
-                    swiper: galleryThumbs
-                },
-            });
-            // change carousel item height
-            // gallery-top
-            let productCarouselTopWidth = $('.gallery-top').outerWidth();
-            $('.gallery-top').css('height', productCarouselTopWidth);
-
-            // gallery-thumbs
-            let productCarouselThumbsItemWith = $('.gallery-thumbs .swiper-slide').outerWidth();
-            $('.gallery-thumbs').css('height', productCarouselThumbsItemWith);
-
-        })
-    </script>
-     <script type="text/javascript">
-    $(".btn-submit").click(function(e){
-        e.preventDefault();
-
-        var $button = $(this);
-        var productId = $button.parent().find("input:even").val();
-        var productSku = $button.parent().find("input:odd").val();
-        var quantity = 1;
-
-        $.ajaxSetup({
-       headers: {
-           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-       }
-   });
-
-   $.ajax({
-          type:'POST',
-          url:"{{ route('addToCart') }}",
-          data:{productId:productId, productSku: productSku, quantity:quantity},
-          success:function(data){
-             toastr.success(data.success);
-          }
-       });
-  
-    });
-   
-  
-</script>
 </body>
 
 </html>

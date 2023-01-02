@@ -28,8 +28,6 @@
                                         <label for="productName">Product Name</label><br>
                                         <input type="text" id="productName" name="productName" value=""><br>
 
-                                        <label for="price">Price</label><br>
-                                        <input type="text" id="price" name="price" value=""><br><br>
 
                                     </div>
 
@@ -55,6 +53,7 @@
                                         </br></br>
                                         <label for="latestOrTop"> Latest or Top rated</label>
                                         <select name="latestOrTop" id="latestOrTop">
+                                            
                                             <option value="0">Latest</option>
                                             <option value="1">Top Rated</option>
 
@@ -118,7 +117,7 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="" class="d-flex" enctype="multipart/form-data">
+                                                                    <form action="{{route('updateProduct')}}" class="d-flex" enctype="multipart/form-data">
                                                                         @csrf
                                                                         <div class="p-1">
                                                                             <input type="hidden" id="update_productId" name="update_productId" value="{{$product->product_id}}">
@@ -127,6 +126,10 @@
 
                                                                             <label for="update_price"> Unit Price</label><br>
                                                                             <input type="text" id="update_price" name="update_price" value="{{$product->unitPrice}}"><br><br>
+
+                                                                            <label for="update_quantity"> Quantity</label><br>
+                                                                            <input type="text" id="update_quantity" name="update_quantity" value="{{$product->totalStock}}"><br><br>
+
 
                                                                             <label for="update_thumbnail">Thumbnail Image</label><br>
 
@@ -138,30 +141,7 @@
                                                                         </div>
 
                                                                         <div>
-
-
-
-
-                                                                            <label for="update_catagory">Choose a catagory:</label>
-                                                                            <select name="update_catagory" id="update_catagory">
-                                                                                @foreach($catagories as $catagory )
-                                                                                @if($catagory->status == "enable")
-                                                                                <option value="{{$catagory->catagoryName}}">{{$catagory->catagoryName}}</option>
-                                                                                @endif
-                                                                                @endforeach
-                                                                            </select>
-                                                                            </br></br>
-                                                                            <label for="update_latestOrTop"> Latest or Top rated</label>
-                                                                            <select name="update_latestOrTop" id="update_latestOrTop">
-                                                                                <option value="0">Latest</option>
-                                                                                <option value="1">Top Rated</option>
-
-                                                                            </select>
-
-
-                                                                            <br><br>
-                                                                            <label for="update_quantity"> Quantity</label><br>
-                                                                            <input type="text" id="update_quantity" name="update_quantity" value="{{$product->availableStock}}"><br><br>
+                                                                            
 
                                                                         </div>
 
@@ -223,6 +203,26 @@
 <script src="{{ asset('bootstrap/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap-modal.js')}}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap-transition.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"> </script>
+<script>
+    @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type','info') }}"
+    switch(type){
+        case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+        break;
+        case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+        break;
+        case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+        break;
+        case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+        break;
+    }
+    @endif
+</script>
 
 
 
@@ -235,25 +235,16 @@
     var sku =$button.parent().prev().find("input#update_sku").val();
     var price = $button.parent().prev().find("input#update_price").val();
     var quantity =$button.parent().prev().find("input#update_quantity").val() ;
-    var latestOrTop =$button.parent().prev().find("input#update_latestOrTop").val();
-    var catagory =$button.parent().prev().find("select#update_catagory").val();
     var thumbnail = $button.parent().prev().find("input#update_thumbnail")[0].files;
     var multiImage = $button.parent().prev().find("input#update_image")[0].files;
     var totalImage = $button.parent().prev().find("input#update_image")[0].files.length;
+    console.log(id,sku,price,quantity);
 
     var fd = new FormData();
     fd.append('id',id);
     fd.append('price',price);
     fd.append('quantity',quantity);
     fd.append('sku',sku);
-    if(latestOrTop == 0){
-        fd.append('latest',latestOrTop);
-    }
-    else{
-        fd.append('top',latestOrTop);
-    }
-    
-    fd.append('catagory',catagory);
     fd.append('thumbnail',thumbnail[0]);
     fd.append('totalImage', totalImage);
 
@@ -278,7 +269,7 @@ $.ajaxSetup({
             processData: false,
             dataType: 'json',
             success:function(data){
-                console.log('hiiiiiiiiiiiiiiiiii');
+                console.log(data.hi);
           }
        });
   
@@ -301,7 +292,7 @@ $.ajaxSetup({
             url:"{{ route('updateStatus') }}",
             data: {id:id,sku:sku,status:status},
             success:function(data){
-                console.log('hiiiiiiiiiiiiiiiiii');
+                toastr.success(data.success);
           }
        });
         

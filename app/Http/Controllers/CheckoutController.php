@@ -8,6 +8,9 @@ use App\Models\Product;
 use App\Models\Catagory;
 use App\Models\Logo;
 use App\Models\Navbar;
+use App\Models\Slider;
+use App\Models\Socialmedia;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,22 +75,23 @@ class CheckoutController extends Controller
             $orderDetail['quantity'] = $item->qty;
             $orderDetail['singlePrice'] = $item->price;
             $orderDetail['status'] = "pending";
+            $orderDetail->save();
             
 
-            //dd($orderDetail['orderinvoice_id'],$orderDetail['product_id'],$orderDetail['user_id'],$orderDetail['quantity'],$orderDetail['singlePrice'],$orderDetail['status']);
-            $orderDetail->save();
+            
         }
         //
         $request->session()->forget('cart');
-        $catagories = Catagory::all();
-        $logo = Logo::get()->last();
-        $navigation = Navbar::all();
-        $user_id = Auth::guard('web')->user()->id;
-        $orders = Invoice::where('user_id',$user_id)->get();
+        $notification = array(
+            'message' => 'Order successfull!!please watch order detail at your dashboard',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('welcome')->with($notification);
+       
         //dd($orders);
         
-        return view ( 'userOrders',compact('orders','catagories','logo','navigation'));
-        //return response()->json(['hi'=>json_encode('hiiiiiiiiiiiiiiii')]);
+       
         
         
     }

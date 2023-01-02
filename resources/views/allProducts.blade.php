@@ -352,7 +352,7 @@
                                             <span class="code-no">{{$stock->sku}}</span>
                                         </div>
                                         <div class="price-div">
-                                            <span class="price">BDT {{$item->price}}</span>
+                                            <span class="price">BDT {{$stock->unitPrice}}</span>
                                             
                                         </div>
 

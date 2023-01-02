@@ -112,6 +112,7 @@
     <script src="assets/js/script.js"></script>
     <!--=====header script=====-->
     <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"> </script>
 
 
     <script type="text/Javascript">
@@ -133,8 +134,8 @@ $.ajax({
             url:"{{ route('orderStatus') }}",
             data:{order_id:order_id, status:status},
             success:function(data){
-                
                 console.log(data);
+                toastr.success(data.success);
             }
         });
 

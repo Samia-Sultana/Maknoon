@@ -64,7 +64,6 @@ class ProductController extends Controller
 
             $insertedProduct = new Product;
             $insertedProduct['productName'] = $request->productName;
-            $insertedProduct['price'] = $request->price;
             $insertedProduct['catagory'] = $request->get('catagory');
             if($request->get('latestOrTop') == 0){
                 $insertedProduct['latest_product'] = $request->get('latestOrTop');
@@ -93,9 +92,12 @@ class ProductController extends Controller
             }
         }
 
-        $catagories = Catagory::all();
-        $allProducts = Stock::all();
-        return view('product', compact('catagories','allProducts'));
+        $notification = array(
+            'message' => 'New product added!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('product')->with($notification); 
     }
 
     /**
@@ -135,39 +137,24 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //$data = $request->all();
-        //dd($data);
+        //return response()->json(['hi' => json_encode($request->all())]);
         $id = $request->input('id');
         $sku = $request->get('sku');
         $price = $request->get('price');
         $quantity = $request->get('quantity');
-        $latestOrTop = $request->get('latestOrTop');
-        $catagory = $request->get('catagory');
-        $status = $request->get('status');
-
-        if($price || $latestOrTop || $catagory || $request->file('thumbnail')){
-            $product = Product::find($id);
-            $product['price'] = $price;
-            $product['catagory'] = $catagory;
-            if($request->get('latestOrTop') == 0){
-                $insertedProduct['latest_product'] = $latestOrTop;
-            }
-            else{
-                $insertedProduct['top_rated'] = $latestOrTop;
-            }
             
 
-
         if ($request->file('thumbnail')) {
+            $product = Product::find($id);
             $thumbnail = $request->file('thumbnail');
             $thumbnailImageName = date('YmdHi') . $thumbnail->getClientOriginalName();
             Image::make($thumbnail)->save('photos/'.$thumbnailImageName);
             $save_url = 'photos/'.$thumbnailImageName;
             $product['image1'] = $thumbnailImageName;
+            $product->save();
 
         }
-        $product->save();
-        }
+        
         if ($request->totalImage > 0) {
             DB::table('productimages')->where('product_id', $id)->delete();
             for ($i = 0; $i < $request->totalImage; $i++) {
@@ -193,7 +180,7 @@ class ProductController extends Controller
             $stock = DB::table('stocks')->where('product_id',$id)->where('sku',$sku)->update([
                 'unitPrice'=> $price,
                 'totalStock' => $quantity,
-                'availableStock'=>"40",
+                'availableStock'=> 0,
                 'status' =>null
 
 
@@ -202,7 +189,7 @@ class ProductController extends Controller
 
         }
 
-        return response()->json(['hi' => 'hiiiiiiiiiiii']);
+        return response()->json(['success'=>'Status Changed Successfully']); 
         
         
     }
@@ -234,6 +221,7 @@ class ProductController extends Controller
         DB::table('stocks')->where('product_id',$id)->where('sku',$sku)->update([
             'status' => $status
         ]);
+        return response()->json(['success'=>'Status Changed Successfully']); 
     }
     // Show all products
     public function showAllProducts()

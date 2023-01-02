@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
     <title>Invoice</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <style>
         html,
@@ -179,6 +181,9 @@
     <p class="text-center">
         Thank your for shopping with Maknoon Lifestyle
     </p>
+    
+    <button class="btn btn-danger" onclick="window.print()">Print</button>
+    
 
 </body>
 </html>

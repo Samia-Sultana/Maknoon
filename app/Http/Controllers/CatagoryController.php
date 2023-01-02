@@ -54,8 +54,12 @@ class CatagoryController extends Controller
         $catagory->save();
     }
         
-    $catagories = Catagory::all();
-    return view('catagory',compact('catagories'));
+    $notification = array(
+        'message' => 'Catagory updated successfully!',
+        'alert-type' => 'success'
+    );
+
+    return redirect()->route('catagory')->with($notification);
     }
 
     /**
@@ -119,6 +123,6 @@ class CatagoryController extends Controller
         DB::table('catagories')->where('id',"=",$id)->update([
             'status' => $status
         ]);
-        return response()->json(['ji'=>'hiiiiiiiiiiiiiiiiiiii']);
+        return response()->json(['success'=>'Status Changed Successfully']); 
     }
 }

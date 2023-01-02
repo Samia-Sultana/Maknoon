@@ -16,6 +16,7 @@ use App\Http\Controllers\NewarrivalController;
 use App\Http\Controllers\OrderdetailController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BlogController;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,8 @@ Route::get('/view/order/{id}', [UserController::class,'viewOrder'])->middleware(
 Route::post('/address', [UserController::class,'editAddress'])->middleware(['auth'])->name('editAddress');
 Route::get('/contact', [ContactController::class,'index'])->name('contact');
 Route::get('/new-arrivals', [NewarrivalController::class,'index'])->name('new-arrivals');
+Route::get('/all/blog',[BlogController::class,'show'])->name('allBlog');
+Route::get('/blog/{id}/view',[BlogController::class,'viewBlog'])->name('viewBlog');
 
 require __DIR__.'/auth.php';
 
@@ -84,7 +87,6 @@ Route::prefix('admin')->group(function(){
     Route::get('/orderDetail/{id}',[OrderdetailController::class,'index'])->middleware(['auth:admin', 'verified']);
     Route::get('/view/invoice/{id}', [InvoiceController::class,'viewInvoice'])->middleware(['auth:admin', 'verified']);
     Route::get('/invoice/{id}/generate',[InvoiceController::class,'generateInvoice']);
-    /*Route::get('/update-order-status',[OrderdetailController::class,'index'])->middleware(['auth:admin', 'verified'])->name('orderStatus');*/
     Route::post('/orderStatus',[OrderdetailController::class,'store'])->middleware(['auth:admin', 'verified'])->name('orderStatus');
     Route::post('/update/product',[ProductController::class,'update'])->middleware(['auth:admin', 'verified'])->name('updateProduct');
     Route::post('/delete/product',[ProductController::class,'destroy'])->middleware(['auth:admin', 'verified'])->name('deleteProduct');
@@ -98,6 +100,11 @@ Route::prefix('admin')->group(function(){
     Route::post('/update/nav/status',[NavbarController::class,'updateNavStatus'])->middleware(['auth:admin', 'verified'])->name('updateNavStatus');
     Route::post('/delete/slider',[SliderController::class,'destroy'])->middleware(['auth:admin', 'verified'])->name('deleteSlider');
     Route::post('/update/slider/status',[SliderController::class,'updateSliderStatus'])->middleware(['auth:admin', 'verified'])->name('updateSliderStatus');
+
+    Route::get('/blog',[BlogController::class,'index'])->middleware(['auth:admin', 'verified'])->name('blog');
+    Route::post('/blog',[BlogController::class,'store'])->middleware(['auth:admin', 'verified'])->name('createBlog');
+    Route::post('/blog/delete',[BlogController::class,'destroy'])->middleware(['auth:admin', 'verified'])->name('deleteBlog');
+    Route::post('/blog/update',[BlogController::class,'updateBlog'])->middleware(['auth:admin', 'verified'])->name('updateBlog');
 
 
 

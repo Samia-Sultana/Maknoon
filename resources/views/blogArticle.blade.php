@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +14,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/logo/favicon/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/logo/favicon/favicon-16x16.png')}}">
     <link rel="manifest" href="{{ asset('assets/img/logo/favicon/site.webmanifest')}}">
-    
 
     <!--======== Bootstrap 4.6===-->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css')}}">
@@ -23,21 +23,22 @@
     <!---======= owl carousel======-->
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css')}}">
+
     <!---======= Header css-->
     <link rel="stylesheet" href="{{ asset('assets/css/header-css/reset.min.css')}}">
+    <!---==========zoom css=========-->
+    <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/easyzoom.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css')}}">
-    
-    <!---------toaster message -------------->
-    <link media="screen" rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
 
 </head>
 
 
 <body class="pattern-bg">
-     <!----===============header start===============-->
-     <header class="header" id="header-area">
+      <!----===============header start===============-->
+      <header class="header" id="header-area">
         <div class="container">
             <section class="wrapper">
             <!----------------dynamic logo---------------->
@@ -251,165 +252,233 @@
             </div>
         </div>
     </div>
-    <!--== Search Box Area End ==-->
+    <!--== Search Box Area End ==-->   
 
-
-
-    <!--=======Filter section start==========-->
-
-    <!--<section class="main-content">
-        <div class="container container-xxl filter">
-            <div class="left-filter">
-                <div class="filter-group hide-on-mobile">
-                    <form action="#">
-                        <select>
-                            <option data-display="Sort By">Clear</option>
-                            <option value="1">Best Selling</option>
-                            <option value="2">Price High to Low</option>
-                            <option value="3">Price Low to High</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-            <div class="right-filter">
-                <p class="filter-label">
-                    <strong>Filter by: </strong>
-                </p>
-                <div class="filter-group hide-on-desktop">
-                    <select>
-                        <option data-display="Sort By">Clear</option>
-                        <option value="1">Best Selling</option>
-                        <option value="2">Price High to Low</option>
-                        <option value="3">Price Low to High</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <select>
-                        <option data-display="Size">Clear</option>
-                        <option value="1">XS</option>
-                        <option value="2">S</option>
-                        <option value="3">M</option>
-                        <option value="4">L</option>
-                        <option value="5">XL</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <select class="product-color">
-                        <option data-display="Color">Clear</option>
-                        <option value="1">Black</option>
-                        <option value="2">Yellow</option>
-                        <option value="3">Blue</option>
-                        <option value="4">Floral Prints</option>
-                        <option value="5">Green</option>
-                        <option value="6">Pink</option>
-                        <option value="7">Red</option>
-                        <option value="8">Solid</option>
-                    </select>
-                </div>
-            </div>
-            
-            
-        </div>
-    </section>-->
-
-
-    <section class="main-content pb-60">
-        <div class="container container-xxl">
-
-            <div class="heading">
-                <h2>
-                    {{$catagoryName}}
-                </h2>
-            </div>
-
-
-            <!-- Shop Page Content Start -->
-
-            <div class="shop-page-content-wrap">
-                <div class="shop-page-products-wrap">
-                    <div class="products-wrapper">
-                        <div class="row">
-                            @foreach($catagoryProducts as $item)
-                            @php
-                            $stocksOfProduct = App\Models\Stock::where('product_id',$item->id)->get();
-                            @endphp
-                            @foreach($stocksOfProduct as $stock)
-                            @if($stock->status == "enable")
-                            <div class="col-lg-3 col-sm-6 col-6 p-x-5">
-                                <!-- Single Product Item -->
-                                <div class="single-product-item text-center mb-3">
-                                    <figure class="product-thumb">
-                                        <a href="{{'/product/details/' . $item->id. '/' . $stock->sku}}"><img src="{{url('photos/'. $item['image1'])}}"
-                                                alt="Products" class="img-fluid"></a>
-                                    </figure>
-
-                                    <div class="product-details">
-                                        <h2><a href="{{'/product/details/' . $item->id. '/' . $stock->sku}}">{{$item->productName}}</a></h2>
-                                        <div class="product-code">
-                                            <span class="code-title">Product Code: </span>
-                                            <span class="code-no">{{$stock->sku}}</span>
-                                        </div>
-                                        <div class="price-div">
-                                            <span class="price">{{"BDT ".$stock->unitPrice}}</span>
-                                            
-                                        </div>
-
-                                        <form>
-                                        <input type="hidden" class="pro-id" value="{{$item['id']}}"/>
-                                        <input type="hidden" class="pro-sku" value="{{$stock->sku}}" />
-                                        <button type="button" class="btn-add-to-cart btn-submit" >
-                                            
-                                        + Add to
-                                            Cart
-                                          
-                                        </button>
-                                        </form>
-
-                                        <!---<button type="button" class="btn-add-to-cart"> <a href="{{'/add-to-cart/'.$item['id']}}"> </a></button>--->
-                                    </div>
-
-                                   
-                                </div>
-                                <!-- Single Product Item -->
-                            </div>
-                            @endif
-                            @endforeach
-                            @endforeach
-                           
-                        </div>
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Page Title-->
+            <div class="page section-header text-center mb-0">
+                <div class="page-title">
+                    <div class="wrapper">
+                        <h1 class="page-width">Blog Article</h1>
                     </div>
                 </div>
             </div>
-
-            <!-- Shop Page Content End -->
-
-
-
-            <div class="row pt-5">
-                <div class="col-md-12">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
+            <!--End Page Title-->
+            <div class="bredcrumbWrap">
+                <div class="container breadcrumbs">
+                    <a href="index.html" title="Back to the home page">Home</a><span aria-hidden="true">›</span>
+                    <a href="blog-left-sidebar.html" title="Back to News">News</a><span aria-hidden="true">›</span><span>Blog Article</span>
                 </div>
             </div>
+            <div class="container main-content">
+                <div class="row">
+                    <!--Main Content-->
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-9 main-col">
+                        <div class="blog--list-view">
+                           @if($blog)
+                           <div class="article">
+                                <!-- Article Image -->
+                                <a class="article_featured-image" href="#"><img class="blur-up lazyload" data-src="{{url('photos/' . $blog->image)}}" src="{{url('photos/' . $blog->image)}}" alt="It's all about how you wear"></a>
+                                <h1><a href="blog-left-sidebar.html">{{$blog->title}}</a></h1>
+                                <ul class="publish-detail">
+                                    
+                                    <li><i class="icon anm anm-clock-r"></i> <time datetime="2017-05-02">{{$blog->created_at->format('d M Y')}}</time></li>
+                                    <li>
+                                        <ul class="inline-list">
+                                            
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="rte">
+                                <?php
+                                $blogDesc = html_entity_decode($blog['description']);
+                                echo $blogDesc;
+                                ?>
+                                </div>
+                                <hr/>
+                               
+                               
+                            </div>
+                           @endif
+                            <!----
+                            <div class="formFeilds contact-form form-vertical">
+                                <form method="post" action="#" id="comment_form" accept-charset="UTF-8" class="comment-form">
+                                    <h2>Leave a comment</h2>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <input type="text" id="ContactFormName" name="contact[name]" placeholder="Name" value="" required="">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="Email" value="" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <textarea required="" rows="10" id="ContactFormMessage" name="contact[body]" placeholder="Your Message"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <p class="fine-print">Please note, comments must be approved before they are published</p>
+                                            <input type="submit" class="btn" value="Send Message">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            ---->
+                        </div>
+                    </div>
+                    <!--End Main Content-->
+                    <!--Sidebar-->
+                    <!--
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 sidebar">
+                        <div class="sidebar_tags">
+                            <div class="sidebar_widget categories">
+                                <div class="widget-title">
+                                    <h2>Category</h2>
+                                </div>
+                                <div class="widget-content">
+                                    <ul class="sidebar_categories">
+                                        <li class="lvl-1 "><a href="http://annimexweb.com/" class="site-nav lvl-1">Beauty</a></li>
+                                        <li class="lvl-1  active"><a href="#" class="site-nav lvl-1">fashion</a></li>
+                                        <li class="lvl-1 "><a href="#" class="site-nav lvl-1">summer</a></li>
+                                        <li class="lvl-1 "><a href="#" class="site-nav lvl-1">trend</a></li>
+                                        <li class="lvl-1 "><a href="#" class="site-nav lvl-1">winter</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="sidebar_widget">
+                                <div class="widget-title">
+                                    <h2>Recent Posts</h2>
+                                </div>
+                                <div class="widget-content">
+                                    <div class="list list-sidebar-products">
+                                        <div class="grid">
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#">
+                                                            <img class="grid-view-item__image blur-up lazyload" data-src="assets/images/blog/blog-post-sml-1.jpg" src="assets/images/blog/blog-post-sml-1.jpg" alt="" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">It's all about how you wear</a>
+                                                        <div class="grid-view-item__meta"><span class="article__date"> <time datetime="2017-05-02T14:33:00Z">May 02, 2017</time></span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#"><img class="grid-view-item__image blur-up lazyload" data-src="assets/images/blog/blog-post-sml-2.jpg" src="assets/images/blog/blog-post-sml-2.jpg" alt="" /></a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">27 Days of Spring Fashion Recap</a>
+                                                        <div class="grid-view-item__meta"><span class="article__date"> <time datetime="2017-05-02T14:33:00Z">May 02, 2017</time> </span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#"><img class="grid-view-item__image blur-up lazyload" data-src="assets/images/blog/blog-post-sml-3.jpg" src="assets/images/blog/blog-post-sml-3.jpg" alt="" /></a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">How to Wear The Folds Trend Four Ways</a>
+                                                        <div class="grid-view-item__meta"><span class="article__date"> <time datetime="2017-05-02T14:14:00Z">May 02, 2017</time> </span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#"><img class="grid-view-item__image blur-up lazyload" data-src="assets/images/blog/blog-post-sml-4.jpg" src="assets/images/blog/blog-post-sml-4.jpg" alt="" /></a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">Accusantium doloremque</a>
+                                                        <div class="grid-view-item__meta"><span class="article__date"> <time datetime="2017-05-02T14:12:00Z">May 02, 2017</time> </span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sidebar_widget static-banner">
+                                <img src="assets/images/side-banner-2.jpg" alt="">
+                            </div>
+                            <div class="sidebar_widget">
+                                <div class="widget-title">
+                                    <h2>Trending Now</h2>
+                                </div>
+                                <div class="widget-content">
+                                    <div class="list list-sidebar-products">
+                                        <div class="grid">
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#">
+                                                            <img class="grid-view-item__image blur-up lazyload" data-src="assets/images/product-images/mini-product-img.jpg" src="assets/images/product-images/mini-product-img.jpg" alt="" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">Cena Skirt</a>
+                                                        <div class="grid-view-item__meta"><span class="product-price__price"><span class="money">$173.60</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#"><img class="grid-view-item__image blur-up lazyload" data-src="assets/images/product-images/mini-product-img1.jpg" src="assets/images/product-images/mini-product-img1.jpg" alt="" /></a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">Block Button Up</a>
+                                                        <div class="grid-view-item__meta"><span class="product-price__price"><span class="money">$378.00</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#"><img class="grid-view-item__image blur-up lazyload" data-src="assets/images/product-images/mini-product-img2.jpg" src="assets/images/product-images/mini-product-img2.jpg" alt="" /></a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">Balda Button Pant</a>
+                                                        <div class="grid-view-item__meta"><span class="product-price__price"><span class="money">$278.60</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid__item">
+                                                <div class="mini-list-item">
+                                                    <div class="mini-view_image">
+                                                        <a class="grid-view-item__link" href="#"><img class="grid-view-item__image blur-up lazyload" data-src="assets/images/product-images/mini-product-img3.jpg" src="assets/images/product-images/mini-product-img3.jpg" alt="" /></a>
+                                                    </div>
+                                                    <div class="details"> <a class="grid-view-item__title" href="#">Border Dress in Black/Silver</a>
+                                                        <div class="grid-view-item__meta"><span class="product-price__price"><span class="money">$228.00</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+-->
+                    <!--End Sidebar-->
+
+                </div>
+            </div>
+
         </div>
-
-    </section>
-
-    <!--=======Filter section end==========-->
-
-    <!--===============Footer start=============-->
-    <footer class="d-flex-column" style="border-top: 1px solid #c5c5c5;">
+        <!--End Body Content-->
+  <!--===============Footer start=============-->
+  <footer class="d-flex-column" style="border-top: 1px solid #c5c5c5;">
         <div class="container container-xxl text-left p-tb-60 ">
             <div class="row   text-center">
                 <hr class="clearfix w-100 d-md-none mb-0">
@@ -529,8 +598,8 @@
     <!--===============Footer end=============-->
 
 
-    <!---=====jquery====-->
-    <script src="{{ asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+   <!----Jquery----->
+   <script src="{{ asset('assets/js/jquery-3.6.0.min.js')}}"></script>
     <!--=====popper js=====-->
     <script src="{{ asset('assets/js/popper.min.js')}}"></script>
     <!--=====bootstrap=====-->
@@ -539,33 +608,59 @@
     <script src="{{ asset('assets/js/owl.carousel.min.js')}}"></script>
     <!--=====header script=====-->
     <script src="{{ asset('assets/js/script.js')}}"></script>
-
     <!--=====header script=====-->
-    <!--===========zoom ============-->
-    <script src="{{ asset('assets/js/swiper.min.js')}}"></script>
-    <script src="{{ asset('assets/js/easyzoom.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery.nice-select.js')}}"></script>
     <script src="{{ asset('assets/js/main.js')}}"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"> </script>
-
     <script type="text/Javascript">
-        $(".button-qty").on("click", function() {
-    
+
+        $(".button-qty").click(function(e){
+        e.preventDefault();
+
         var $button = $(this);
-        var oldValue = $button.parent().find("input").val();
+        var oldQuantity = $button.parent().find("input:even").val();
+        var productId = $button.parent().find("input:odd").val();
+        var productSku = $button.parent().prev().val();
+        console.log(oldQuantity,productId,productSku);
+        var newQuantity;
         $button.blur();
         if ($button.hasClass("inc")) {
-        var newVal = parseFloat(oldValue) + 1;
-      } else {
-     // Don't allow decrementing below zero
-      if (oldValue > 1) {
-        var newVal = parseFloat(oldValue) - 1;
-      } else {
-        newVal = 1;
-      }
-    }
-    
-    $button.parent().find("input").val(newVal);
+            newQuantity = parseFloat(oldQuantity) + 1;
+        } 
+        else {
+        if (oldQuantity > 1) {
+            newQuantity = parseFloat(oldQuantity) - 1;
+        } else {
+            newQuantity = 1;
+        }
+        }
+        
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        $.ajax({
+            type:'POST',
+            url:"{{ route('updateShoppingCart') }}",
+            data:{productId:productId, newQuantity:newQuantity, productSku:productSku},
+            success:function(data){
+                var productPrice = $button.parents(".pro-quantity").prev().text();
+                $button.parent().find("input:even").val(newQuantity);
+                $button.parents(".pro-quantity").next().text(newQuantity * productPrice);
+
+                var cart = JSON.parse(data.cart);
+                var subTotal = cart.reduce(function(accumulator,currentItem){
+                    return accumulator + (currentItem.qty * currentItem.price);
+                },0);
+                var grandTotal = subTotal ;
+                //console.log(grandTotal);
+                $button.parents(".cart-detail-row").next().find("td.sub-total").text(subTotal);
+                $button.parents(".cart-detail-row").next().find("td.grand-total").text(grandTotal);
+                
+            }
+        });
+
     
     });
       </script>
@@ -579,6 +674,7 @@
                 document.getElementById("mySidenav").style.width = "90vw";
             }
         }
+
         /* Set the width of the side navigation to 0 */
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
@@ -588,80 +684,8 @@
 
 
 
-    <script>
-        $(document).ready(function () {
-            // product Gallery and Zoom
-            // activation carousel plugin
-            var galleryThumbs = new Swiper('.gallery-thumbs', {
-                spaceBetween: 5,
-                freeMode: true,
-                watchSlidesVisibility: true,
-                watchSlidesProgress: true,
-                on: {
-                    init: function () {
-                        console.log('swiper initialized');
-                        // activation zoom plugin
-                        var $easyzoom = $('.easyzoom').easyZoom();
-                    },
-                },
-                breakpoints: {
-                    0: {
-                        slidesPerView: 3,
-                    },
-                    992: {
-                        slidesPerView: 4,
-                    },
-                }
-            });
-            var galleryTop = new Swiper('.gallery-top', {
-                spaceBetween: 10,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                thumbs: {
-                    swiper: galleryThumbs
-                },
-            });
-            // change carousel item height
-            // gallery-top
-            let productCarouselTopWidth = $('.gallery-top').outerWidth();
-            $('.gallery-top').css('height', productCarouselTopWidth);
-
-            // gallery-thumbs
-            let productCarouselThumbsItemWith = $('.gallery-thumbs .swiper-slide').outerWidth();
-            $('.gallery-thumbs').css('height', productCarouselThumbsItemWith);
-
-        })
-    </script>
-     <script type="text/javascript">
-    $(".btn-submit").click(function(e){
-        e.preventDefault();
-
-        var $button = $(this);
-        var productId = $button.parent().find("input:even").val();
-        var productSku = $button.parent().find("input:odd").val();
-        var quantity = 1;
-
-        $.ajaxSetup({
-       headers: {
-           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-       }
-   });
-
-   $.ajax({
-          type:'POST',
-          url:"{{ route('addToCart') }}",
-          data:{productId:productId, productSku: productSku, quantity:quantity},
-          success:function(data){
-             toastr.success(data.success);
-          }
-       });
-  
-    });
-   
-  
-</script>
 </body>
 
 </html>
+        
+

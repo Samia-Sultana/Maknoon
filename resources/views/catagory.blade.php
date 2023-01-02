@@ -126,6 +126,26 @@
 <script src="{{ asset('assets/js/script.js')}}"></script>
 <!--=====header script=====-->
 <script src="{{ asset('assets/js/main.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"> </script>
+<script>
+    @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type','info') }}"
+    switch(type){
+        case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+        break;
+        case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+        break;
+        case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+        break;
+        case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+        break;
+    }
+    @endif
+</script>
 <script type="text/Javascript">
      $(".status").on("change", function() {
         var $select = $(this);
@@ -143,7 +163,7 @@
             url:"{{ route('updateCatagoryStatus') }}",
             data: {id:id,status:status},
             success:function(data){
-                console.log('hiiiiiiiiiiiiiiiiii');
+                toastr.success(data.success);
           }
        });
         

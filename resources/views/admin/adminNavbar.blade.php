@@ -81,6 +81,9 @@
                                         <span class="nk-menu-text">Orders</span>
                                     </a>
             </li>
+            <li class="nk-menu-item">
+                                            <a href="{{ route('blog') }}" class="nk-menu-link"><span class="nk-menu-text">Blog</span></a>
+                                        </li>
 
                             </ul><!-- .nk-menu -->
                         </div><!-- .nk-sidebar-menu -->

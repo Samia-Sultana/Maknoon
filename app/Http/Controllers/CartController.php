@@ -9,6 +9,7 @@ use App\Cart;
 
 use App\Models\Logo;
 use App\Models\Navbar;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -43,12 +44,14 @@ class CartController extends Controller
         $productId = $request->input('productId');
         $productSku = $request->input('productSku');
         $quantity = $request->input('quantity');
+        $price = Stock::where('product_id',$productId)->where('sku',$productSku)->get();
+
         $product = Product::find($productId);
         $cartProduct = (object) array(
             'id' => $product->id,
             'sku'=> $productSku,
             'name' =>$product->productName,
-            'price' => $product->price,
+            'price' => $price[0]->unitPrice,
             'thumbnail' => $product->image1,
             'qty' => $quantity
         );
